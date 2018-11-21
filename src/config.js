@@ -1,5 +1,11 @@
-export default {
+const config = {
+  filter: /\.(wxml|wxss)$/
+}
+
+const rule = {
   unit: 'px',
   targetUnit: 'rpx',
-  rate: 1 //targetUnit/sourceUnit
+  proportion: 1 // targetUnit / unit
 }
+
+export { config, rule }

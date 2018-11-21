@@ -1,5 +1,5 @@
 {
-  "name": "wepy-plugin-2rpx",
+  "name": "wepy-plugin-any2rpx",
   "version": "0.1.0",
   "description": "transform any css unit to rpx",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryzonqz/wepy-plugin-2rpx.git"
+    "url": "git+https://github.com/ryzonqz/wepy-plugin-any2rpx.git"
   },
   "keywords": [
     "css",

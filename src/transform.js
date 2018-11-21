@@ -1,5 +1,5 @@
 import css from 'css'
-import config from './config'
+import { rule } from './config'
 
 const buling = /(^|[^\d])(\.\d)/g
 
@@ -10,12 +10,17 @@ const getValue = (val, unit) => {
 
 class UnitTransform {
   constructor(opts = {}) {
-    this.setting = Object.assign(config, opts)
-    this.regExp = new RegExp(`\\b(\\d+(\\.\\d+)?)${this.setting.unit}\\b`, 'g')
+    let _arr = Array.isArray(opts) ? opts : [opts]
+
+    this.rules = _arr.map(item => {
+      let r = Object.assign(item, rule)
+      r.regExp = new RegExp(`\\b(\\d+(\\.\\d+)?)${r.unit}\\b`, 'g')
+      return r
+    })
   }
 
   test(val) {
-    return this.regExp.test(val)
+    return this.rules.some(r => r.regExp.test(val))
   }
 
   transformUnit(val) {
@@ -27,12 +32,17 @@ class UnitTransform {
         return $1 + '0' + $2
       })
     }
-    return val.replace(this.regExp, (match, $1) => {
-      return getValue($1 * this.setting.rate, this.setting.targetUnit)
+    this.rules.forEach(r => {
+      val = val.replace(r.regExp, (match, $1) => {
+        return getValue($1 * r.proportion, r.targetUnit)
+      })
     })
+
+    return val
   }
 }
 
+//transform css file
 const transformCss = (content, opts) => {
   let ut = new UnitTransform(opts)
 
@@ -68,7 +78,7 @@ const transformHtml = (content, opts) => {
 
   if (/\sstyle="[^"]*"/.test(content)) {
     content = content.replace(/(\sstyle=")([^"]*)"/g, (match, $1, $2) => {
-      return $1 + ut.transformUnit($2) + "\""
+      return $1 + ut.transformUnit($2) + '"'
     })
   }
 
