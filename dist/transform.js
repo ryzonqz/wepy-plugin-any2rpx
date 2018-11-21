@@ -33,7 +33,7 @@ var UnitTransform = function () {
     var _arr = Array.isArray(opts) ? opts : [opts];
 
     this.rules = _arr.map(function (item) {
-      var r = Object.assign(item, _config.rule);
+      var r = Object.assign(_config.rule, item);
       r.regExp = new RegExp('\\b(\\d+(\\.\\d+)?)' + r.unit + '\\b', 'g');
       return r;
     });
@@ -56,6 +56,7 @@ var UnitTransform = function () {
         val = val.replace(buling, function (match, $1, $2) {
           return $1 + '0' + $2;
         });
+        console.log(val);
       }
       this.rules.forEach(function (r) {
         val = val.replace(r.regExp, function (match, $1) {

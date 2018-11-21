@@ -13,7 +13,7 @@ class UnitTransform {
     let _arr = Array.isArray(opts) ? opts : [opts]
 
     this.rules = _arr.map(item => {
-      let r = Object.assign(item, rule)
+      let r = Object.assign(rule, item)
       r.regExp = new RegExp(`\\b(\\d+(\\.\\d+)?)${r.unit}\\b`, 'g')
       return r
     })
@@ -32,6 +32,7 @@ class UnitTransform {
         return $1 + '0' + $2
       })
     }
+
     this.rules.forEach(r => {
       val = val.replace(r.regExp, (match, $1) => {
         return getValue($1 * r.proportion, r.targetUnit)
