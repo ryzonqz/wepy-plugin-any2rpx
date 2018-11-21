@@ -1,5 +1,5 @@
 export default {
-  sourceUnit: 'rem',
+  unit: 'px',
   targetUnit: 'rpx',
-  rate: 100 //targetUnit/sourceUnit
+  rate: 1 //targetUnit/sourceUnit
 }

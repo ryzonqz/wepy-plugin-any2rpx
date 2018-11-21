@@ -1,7 +1,7 @@
 import css from 'css'
 import config from './config'
 
-let buling = /(^|[^\d])(\.\d)/g
+const buling = /(^|[^\d])(\.\d)/g
 
 const getValue = (val, unit) => {
   val = parseFloat(val.toFixed(6)) // control decimal precision of the calculated value
@@ -11,7 +11,7 @@ const getValue = (val, unit) => {
 class UnitTransform {
   constructor(opts = {}) {
     this.setting = Object.assign(config, opts)
-    this.regExp = new RegExp(`\\b(\\d+(\\.\\d+)?)${this.setting.sourceUnit}\\b`, 'g')
+    this.regExp = new RegExp(`\\b(\\d+(\\.\\d+)?)${this.setting.unit}\\b`, 'g')
   }
 
   test(val) {
@@ -19,8 +19,10 @@ class UnitTransform {
   }
 
   transformUnit(val) {
-    //先补充.xrem之前的0
-    if (!/'|"/.test(val) && buling.test(val)) {
+    //some style like content
+    if (/'|"/.test(val)) return
+    //add '0' before '.\d'
+    if (buling.test(val)) {
       val = val.replace(buling, (match, $1, $2) => {
         return $1 + '0' + $2
       })
@@ -31,7 +33,7 @@ class UnitTransform {
   }
 }
 
-export const transformCss = (content, opts) => {
+const transformCss = (content, opts) => {
   let ut = new UnitTransform(opts)
 
   let astObj = css.parse(content)
@@ -61,14 +63,16 @@ export const transformCss = (content, opts) => {
 }
 
 //transform inline style
-export const transformHtml = (content, opts) => {
+const transformHtml = (content, opts) => {
   let ut = new UnitTransform(opts)
 
   if (/\sstyle="[^"]*"/.test(content)) {
-    content = content.replace(/(\sstyle=")([^"]*)(")/g, (match, $1, $2, $3) => {
-      return $1 + ut.transformUnit($2) + $3
+    content = content.replace(/(\sstyle=")([^"]*)"/g, (match, $1, $2) => {
+      return $1 + ut.transformUnit($2) + "\""
     })
   }
 
   return content
 }
+
+export { transformCss, transformHtml }
