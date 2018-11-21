@@ -39,10 +39,10 @@ module.exports.plugins = {
   * config.transform 转化规则数组, 可配置多项<br>
     默认:
     ```
-      {
-        unit: 'px', //转化单位
-        proportion: 1 //转化系数=rpx/unit
-      }
+    {
+      unit: 'px', //转化单位
+      proportion: 1 //转化系数=rpx/unit
+    }
     ```
 
 
