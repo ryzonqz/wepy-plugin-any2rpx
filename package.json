@@ -1,6 +1,6 @@
 {
   "name": "wepy-plugin-any2rpx",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "transform any css unit to rpx",
   "main": "dist/index.js",
   "scripts": {

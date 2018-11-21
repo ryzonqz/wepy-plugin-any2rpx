@@ -32,7 +32,7 @@ var UnitTransform = function () {
 
     this.exclude = _config.config.exclude || opts.exclude;
 
-    var _arr = Array.isArray(opts) ? opts : [opts];
+    var _arr = opts.transform && opts.transform.length ? opts.transform : [_config.config.transform];
     this.rules = _arr.map(function (item) {
       var r = Object.assign(_config.config.transform, item);
       r.regExp = new RegExp('\\b(\\d+(\\.\\d+)?)' + r.unit + '\\b', 'g');
