@@ -3,8 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = {
-  sourceUnit: 'rem',
-  targetUnit: 'rpx',
-  rate: 100 //targetUnit/sourceUnit
+var config = {
+  filter: /\.(wxml|wxss)$/
 };
+
+var rule = {
+  unit: 'px',
+  targetUnit: 'rpx',
+  proportion: 1 // targetUnit / unit
+};
+
+exports.config = config;
+exports.rule = rule;

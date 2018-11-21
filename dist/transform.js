@@ -13,8 +13,6 @@ var _css2 = _interopRequireDefault(_css);
 
 var _config = require('./config');
 
-var _config2 = _interopRequireDefault(_config);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32,36 +30,50 @@ var UnitTransform = function () {
 
     _classCallCheck(this, UnitTransform);
 
-    this.setting = Object.assign(_config2.default, opts);
-    this.regExp = new RegExp('\\b(\\d+(\\.\\d+)?)' + this.setting.sourceUnit + '\\b', 'g');
+    var _arr = Array.isArray(opts) ? opts : [opts];
+
+    this.rules = _arr.map(function (item) {
+      var r = Object.assign(item, _config.rule);
+      r.regExp = new RegExp('\\b(\\d+(\\.\\d+)?)' + r.unit + '\\b', 'g');
+      return r;
+    });
   }
 
   _createClass(UnitTransform, [{
     key: 'test',
     value: function test(val) {
-      return this.regExp.test(val);
+      return this.rules.some(function (r) {
+        return r.regExp.test(val);
+      });
     }
   }, {
     key: 'transformUnit',
     value: function transformUnit(val) {
-      var _this = this;
-
-      //先补充.xrem之前的0
-      if (!/'|"/.test(val) && buling.test(val)) {
+      //some style like content
+      if (/'|"/.test(val)) return;
+      //add '0' before '.\d'
+      if (buling.test(val)) {
         val = val.replace(buling, function (match, $1, $2) {
           return $1 + '0' + $2;
         });
       }
-      return val.replace(this.regExp, function (match, $1) {
-        return getValue($1 * _this.setting.rate, _this.setting.targetUnit);
+      this.rules.forEach(function (r) {
+        val = val.replace(r.regExp, function (match, $1) {
+          return getValue($1 * r.proportion, r.targetUnit);
+        });
       });
+
+      return val;
     }
   }]);
 
   return UnitTransform;
 }();
 
-var transformCss = exports.transformCss = function transformCss(content, opts) {
+//transform css file
+
+
+var transformCss = function transformCss(content, opts) {
   var ut = new UnitTransform(opts);
 
   var astObj = _css2.default.parse(content);
@@ -91,14 +103,17 @@ var transformCss = exports.transformCss = function transformCss(content, opts) {
 };
 
 //transform inline style
-var transformHtml = exports.transformHtml = function transformHtml(content, opts) {
+var transformHtml = function transformHtml(content, opts) {
   var ut = new UnitTransform(opts);
 
   if (/\sstyle="[^"]*"/.test(content)) {
-    content = content.replace(/(\sstyle=")([^"]*)(")/g, function (match, $1, $2, $3) {
-      return $1 + ut.transformUnit($2) + $3;
+    content = content.replace(/(\sstyle=")([^"]*)"/g, function (match, $1, $2) {
+      return $1 + ut.transformUnit($2) + '"';
     });
   }
 
   return content;
 };
+
+exports.transformCss = transformCss;
+exports.transformHtml = transformHtml;
