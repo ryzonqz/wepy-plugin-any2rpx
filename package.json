@@ -1,0 +1,31 @@
+{
+  "name": "wepy-plugin-2rpx",
+  "version": "0.1.0",
+  "description": "transform any css unit to rpx",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryzonqz/wepy-plugin-htmltag.git"
+  },
+  "keywords": [
+    "css",
+    "weapp",
+    "wepy"
+  ],
+  "author": "ryzon",
+  "license": "MIT",
+  "dependencies": {
+    "css": "^2.2.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1"
+  }
+}
