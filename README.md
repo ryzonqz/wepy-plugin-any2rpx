@@ -16,8 +16,11 @@ module.exports.plugins = {
   any2rpx: {
     filter: /\.(wxml|wxss)$/,
     config: {
-      unit: 'px',
-      proportion: 1
+      exclude: '1px',
+      transform: [{
+        unit: 'px',
+        proportion: 1
+      }]
     }
   }
 }
@@ -29,14 +32,19 @@ module.exports.plugins = {
   默认: `/\.(wxml|wxss)$/`
 
 * config 具体配置<br>
-  默认: 对象<br>
-  可以是数组, 数组内每个配置都会被应用
 
-  * config.unit 需要转化的单位<br>
-   默认: 'px'
+  * config.exclude 例外, 例如'1px'<br>
+    默认: 无
 
-  * config.proportion 转化的比例=rpx/unit<br>
-    默认: 1
+  * config.transform 转化规则数组, 可配置多项<br>
+    默认:
+    ```
+      {
+        unit: 'px', //转化单位
+        proportion: 1 //转化系数=rpx/unit
+      }
+    ```
+
 
 # 注意
 
