@@ -13,7 +13,6 @@
 wepy.config.js
 ```javascript
 module.exports.plugins = {
-  // ...
   any2rpx: {
     filter: /\.(wxml|wxss)$/,
     config: {
@@ -21,7 +20,6 @@ module.exports.plugins = {
       proportion: 1
     }
   }
-  // ...
 }
 ```
 
