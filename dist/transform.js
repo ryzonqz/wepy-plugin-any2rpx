@@ -56,8 +56,8 @@ var UnitTransform = function () {
         val = val.replace(buling, function (match, $1, $2) {
           return $1 + '0' + $2;
         });
-        console.log(val);
       }
+
       this.rules.forEach(function (r) {
         val = val.replace(r.regExp, function (match, $1) {
           return getValue($1 * r.proportion, r.targetUnit);
