@@ -1,9 +1,18 @@
 const transform = require('../dist/transform')
 
-let config = { unit: 'rem', proportion: 100 }
+let config = {
+  exclude: '1px',
+  transform: [{
+    unit: 'rem',
+    proportion: 100
+  },{
+    unit: 'px',
+    proportion: 1
+  }]
+}
 
 let style =
-  ':root{--1:#369;} body { width: 2rem; height: .2rem; border:1rem .2rem 3.1rem; transform: translateX(-.2rem) }'
+  ':root{--1:#369;} body { conent:"1rem"; width: 2rem; height: .2rem; border:1rem 1px 3.1rem; transform: translateX(-.2rem); left:20px }'
 let html =
   '<div style="width: 2rem; height: .2rem 3.1rem; transform: translateY(-1.2rem)"><text style="height:1rem; width:.1rem">'
 

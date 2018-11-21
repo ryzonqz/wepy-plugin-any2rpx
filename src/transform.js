@@ -1,5 +1,5 @@
 import css from 'css'
-import { rule } from './config'
+import { config } from './config'
 
 const buling = /(^|[^\d])(\.\d)/g
 
@@ -10,10 +10,11 @@ const getValue = (val, unit) => {
 
 class UnitTransform {
   constructor(opts = {}) {
-    let _arr = Array.isArray(opts) ? opts : [opts]
+    this.exclude = config.exclude || opts.exclude
 
+    let _arr = Array.isArray(opts) ? opts : [opts]
     this.rules = _arr.map(item => {
-      let r = Object.assign(rule, item)
+      let r = Object.assign(config.transform, item)
       r.regExp = new RegExp(`\\b(\\d+(\\.\\d+)?)${r.unit}\\b`, 'g')
       return r
     })
@@ -35,7 +36,10 @@ class UnitTransform {
 
     this.rules.forEach(r => {
       val = val.replace(r.regExp, (match, $1) => {
-        return getValue($1 * r.proportion, r.targetUnit)
+        if (this.exclude !== match) {
+          return getValue($1 * r.proportion, r.targetUnit)
+        }
+        return match
       })
     })
 

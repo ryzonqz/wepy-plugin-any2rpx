@@ -18,7 +18,7 @@ var WepyPluginCssUnit = function () {
 
     _classCallCheck(this, WepyPluginCssUnit);
 
-    this.setting = Object.assign(_config.config, opts);
+    this.setting = Object.assign(_config.setting, opts);
   }
 
   _createClass(WepyPluginCssUnit, [{

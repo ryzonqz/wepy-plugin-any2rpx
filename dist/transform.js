@@ -30,10 +30,11 @@ var UnitTransform = function () {
 
     _classCallCheck(this, UnitTransform);
 
-    var _arr = Array.isArray(opts) ? opts : [opts];
+    this.exclude = _config.config.exclude || opts.exclude;
 
+    var _arr = Array.isArray(opts) ? opts : [opts];
     this.rules = _arr.map(function (item) {
-      var r = Object.assign(_config.rule, item);
+      var r = Object.assign(_config.config.transform, item);
       r.regExp = new RegExp('\\b(\\d+(\\.\\d+)?)' + r.unit + '\\b', 'g');
       return r;
     });
@@ -49,6 +50,8 @@ var UnitTransform = function () {
   }, {
     key: 'transformUnit',
     value: function transformUnit(val) {
+      var _this = this;
+
       //some style like content
       if (/'|"/.test(val)) return;
       //add '0' before '.\d'
@@ -60,7 +63,10 @@ var UnitTransform = function () {
 
       this.rules.forEach(function (r) {
         val = val.replace(r.regExp, function (match, $1) {
-          return getValue($1 * r.proportion, r.targetUnit);
+          if (_this.exclude !== match) {
+            return getValue($1 * r.proportion, r.targetUnit);
+          }
+          return match;
         });
       });
 

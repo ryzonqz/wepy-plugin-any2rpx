@@ -3,15 +3,18 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var config = {
+var setting = {
   filter: /\.(wxml|wxss)$/
 };
 
-var rule = {
-  unit: 'px',
-  targetUnit: 'rpx',
-  proportion: 1 // targetUnit / unit
+var config = {
+  exclude: null,
+  transform: {
+    unit: 'px',
+    targetUnit: 'rpx',
+    proportion: 1 // targetUnit / unit
+  }
 };
 
+exports.setting = setting;
 exports.config = config;
-exports.rule = rule;
