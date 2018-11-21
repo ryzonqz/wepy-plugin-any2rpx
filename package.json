@@ -10,10 +10,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryzonqz/wepy-plugin-htmltag.git"
+    "url": "git+https://github.com/ryzonqz/wepy-plugin-2rpx.git"
   },
   "keywords": [
     "css",
+    "plugin",
     "weapp",
     "wepy"
   ],
