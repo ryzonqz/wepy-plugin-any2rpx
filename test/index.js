@@ -5,9 +5,6 @@ let config = {
   transform: [{
     unit: 'rem',
     proportion: 100
-  },{
-    unit: 'px',
-    proportion: 1
   }]
 }
 

@@ -12,7 +12,7 @@ class UnitTransform {
   constructor(opts = {}) {
     this.exclude = config.exclude || opts.exclude
 
-    let _arr = Array.isArray(opts) ? opts : [opts]
+    let _arr = opts.transform && opts.transform.length ? opts.transform : [config.transform]
     this.rules = _arr.map(item => {
       let r = Object.assign(config.transform, item)
       r.regExp = new RegExp(`\\b(\\d+(\\.\\d+)?)${r.unit}\\b`, 'g')
