@@ -1,4 +1,4 @@
-import { config } from './transform'
+import { config } from './config'
 import { transformCss, transformHtml } from './transform'
 
 export default class WepyPluginCssUnit {
