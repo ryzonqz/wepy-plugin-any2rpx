@@ -1,4 +1,5 @@
 node_modules/
 test/
 src/
+gulpfile.js
 package-lock.json
