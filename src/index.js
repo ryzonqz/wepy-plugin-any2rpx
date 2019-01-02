@@ -7,7 +7,7 @@ export default class WepyPluginCssUnit {
   }
   apply(op) {
     let setting = this.setting
-    if (setting.filter.test(op.file)) {
+    if (op.code && setting.filter.test(op.file)) {
       if (/\.wxss$/.test(op.file)) {
         op.code = transformCss(op.code, setting.config)
       }

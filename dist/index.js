@@ -25,7 +25,7 @@ var WepyPluginCssUnit = function () {
     key: 'apply',
     value: function apply(op) {
       var setting = this.setting;
-      if (setting.filter.test(op.file)) {
+      if (op.code && setting.filter.test(op.file)) {
         if (/\.wxss$/.test(op.file)) {
           op.code = (0, _transform.transformCss)(op.code, setting.config);
         }
